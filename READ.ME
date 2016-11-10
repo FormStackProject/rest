@@ -1,0 +1,81 @@
+#-------------------------------------------
+# FormStack Engineering Example
+#-------------------------------------------
+
+Engineer: Steven Craig Sickles
+
+This first goal of this REST 'simulation' (I say simulation because PHP 
+is an odd choice for an actual REST implementation) was to
+implement it in as few lines of code as possible. Indeed,
+the PHPUnit testing code is far longer. The second goal was
+make the implementation generic enough (or at least indicate intent)
+to handle any number of future tables. 
+
+The database table I used for the implementation was 'contacts',
+but you'll notice that table name appears nowhere in the controller.
+It analyzes the given REST URI to determine the table upon which
+to operate upon. The exception is a password field, which
+should be encrypted as part of create and update operations, and
+thus is handled explicitly.
+
+NOTES: 
+
+(1) Yeah, I know. Should have used a whole mess of 
+'if (!function_exists(<NAMESPACE AND FUNCTION_NAME>))', but 
+it would have just cluttered up the code. Take it as read.
+
+(2) I'm betting that FormStack has a manual of recommended coding 
+standards, so the documentation is assuredly looser than what is 
+eventually expected.
+
+#-------------------------------------------
+# COMMANDS (Sample) 
+#-------------------------------------------
+POST (Create)
+	http://TestBox.dev/contacts/	: With parameter JSON contact object
+
+GET (Read):
+	http://TestBox.dev/contacts/	: Retrieve all contact records
+	http://TestBox.dev/contacts/1	: Retrive contact with id #1
+
+PUT (Update):
+	http://TestBox.dev/contact/	: With parameter JSON contact object 
+					: containing id key
+
+DELETE (Delete)
+	http://TestBox.dev/contact/#	: Where '#' is the record to delete
+
+
+#-------------------------------------------
+# FILE SYSTEM
+#-------------------------------------------
+
+* CONFIG
+api/.htacces:		The mod_rewrite module which simulates REST simulation
+
+* CONTROLLER
+api/api.php		: REST controller
+
+* MODEL
+api/models/Model.html	: MySQL model encapsulation
+
+* VIEW
+api/views/View.html	: Simple JSON-ized API output
+
+* INCLUDE FILES
+api/inc/connect.inc	: Database connection constants. Should be 
+			: stored outside of doc root in actual implementation
+api/inc/libraries.inc	: The require_once for all necessary controller files
+
+* LIBRARIES
+api/lib/password.php	: Third-party password encryption routine
+
+* PHP UNIT TESTS
+tests/run		: Simple run tests script
+tests/RestTest.php	: Tests the CRUD operations of the REST implementation. 
+tests/Rest.php		: Curl request regarding  REST get, post, 
+			: put & delete operations
+tests/lib/Curl.php	: Third-party Curl implementation
+
+* MISCELLANEOUS
+misc/my_app.sql		: MySQL dump of my_app database

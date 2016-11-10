@@ -1,0 +1,12 @@
+
+#Mod_rewrite to simulate true REST data transfer.
+
+# I say 'simulate', as we know, because PHP isn't really RESTful.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteRule ^(.*)$ api.php?$1
+ 
+
+</IfModule>
