@@ -12,7 +12,7 @@ class Model
     private $sqli = null;
     private $instance = null;
     
-    public function initAndConnect()
+    public static function initAndConnect()
     {
         global $dirApi;
         require_once(sprintf("%s/inc/connect.inc", $dirApi));
@@ -32,7 +32,7 @@ class Model
         return $instance;
     }
     
-    public function remove($table=null, $id=null)
+    public function remove($table=null, $id=null, $debug=false)
     {
         /**
         * Deletes record based on id.

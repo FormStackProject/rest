@@ -12,7 +12,7 @@ class View
     {
     }
 
-    public function init()
+    public static function init()
     {
         $instance = new self();
 
